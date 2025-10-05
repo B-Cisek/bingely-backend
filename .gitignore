@@ -11,3 +11,8 @@
 .idea
 .vscode
 docker-compose.override.yml
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
