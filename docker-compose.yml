@@ -1,0 +1,35 @@
+services:
+    bingely-app:
+        build:
+            context: ".docker/php"
+            dockerfile: Dockerfile
+            target: php-local
+        volumes:
+            - '.:/app:z'
+        networks:
+            - bingely
+
+    bingely-web:
+        image: 'nginx:1.29.0'
+        volumes:
+            - '.:/app:z'
+            - '.docker/nginx/nginx.conf:/etc/nginx/nginx.conf'
+        networks:
+            - bingely
+
+    bingely-db:
+        image: postgres:18.0
+        environment:
+            POSTGRES_USER: 'bingely'
+            POSTGRES_PASSWORD: 'bingely'
+            POSTGRES_DB: 'bingely'
+        volumes:
+            - 'bingely-db:/var/lib/postgresql/data'
+        networks:
+            - bingely
+
+volumes:
+    bingely-db: ~
+
+networks:
+    bingely: ~
