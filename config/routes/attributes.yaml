@@ -1,0 +1,7 @@
+kernel:
+    resource: ../../src/Application/Infrastructure/Symfony/Kernel.php
+    type: attribute
+
+app_controllers:
+    resource: ../../src/Application/UserInterface/Controller/
+    type: attribute

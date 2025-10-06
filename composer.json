@@ -38,12 +38,12 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Bingely\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "Bingely\\Tests\\": "tests/"
         }
     },
     "replace": {
