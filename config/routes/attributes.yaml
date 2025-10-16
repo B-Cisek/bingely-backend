@@ -1,5 +1,5 @@
 kernel:
-    resource: ../../src/Application/Infrastructure/Symfony/Kernel.php
+    resource: ../../src/Shared/Infrastructure/Symfony/Kernel.php
     type: attribute
 
 app_controllers:

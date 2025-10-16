@@ -1,6 +1,6 @@
 <?php
 
-use Bingely\Application\Infrastructure\Symfony\Kernel;
+use Bingely\Shared\Infrastructure\Symfony\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 

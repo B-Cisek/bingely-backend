@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Bingely\Shared\Infrastructure\Symfony\Exception;
+
+use Symfony\Component\HttpFoundation\Response;
+
+final class ValidationException extends ApiException
+{
+    private array $violations = [];
+
+    public function __construct(
+        string $message = 'Validation failed',
+        array $violations = [],
+        ?\Throwable $previous = null
+    ) {
+        $this->violations = $violations;
+        parent::__construct($message, $previous);
+    }
+
+    protected function getDefaultStatusCode(): int
+    {
+        return Response::HTTP_UNPROCESSABLE_ENTITY;
+    }
+
+    public function getViolations(): array
+    {
+        return $this->violations;
+    }
+}
