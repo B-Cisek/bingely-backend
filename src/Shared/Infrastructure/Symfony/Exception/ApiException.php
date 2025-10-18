@@ -8,6 +8,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 abstract class ApiException extends HttpException
 {
+    /**
+     * @param array<string, string|string[]> $headers
+     */
     public function __construct(
         string $message = '',
         ?\Throwable $previous = null,

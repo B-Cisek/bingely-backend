@@ -93,6 +93,9 @@ final readonly class ApiExceptionListener
         };
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     private function extractValidationErrors(UnprocessableEntityHttpException $exception): array
     {
         $previous = $exception->getPrevious();
