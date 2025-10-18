@@ -30,5 +30,8 @@ composer:
 test:
 	docker compose exec bingely-app vendor/bin/phpunit
 
+format:
+	docker compose exec bingely-app ./vendor/bin/php-cs-fixer fix --allow-risky=yes
+
 %:
 	@:

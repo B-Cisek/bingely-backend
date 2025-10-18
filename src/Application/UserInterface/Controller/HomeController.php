@@ -16,9 +16,9 @@ class HomeController extends AbstractController
     public function index(#[MapRequestPayload] HomeRequest $request): JsonResponse
     {
         return $this->json([
-            "data" => [
-                "name" => $request->name,
-                "email" => $request->email,
+            'data' => [
+                'name' => $request->name,
+                'email' => $request->email,
             ],
         ]);
     }

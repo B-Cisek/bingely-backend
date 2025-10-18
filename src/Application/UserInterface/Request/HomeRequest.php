@@ -17,7 +17,5 @@ final readonly class HomeRequest
         #[NotBlank]
         #[Email]
         public string $email,
-    )
-    {
-    }
+    ) {}
 }

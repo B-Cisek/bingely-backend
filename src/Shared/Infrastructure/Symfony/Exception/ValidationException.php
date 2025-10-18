@@ -19,13 +19,13 @@ final class ValidationException extends ApiException
         parent::__construct($message, $previous);
     }
 
-    protected function getDefaultStatusCode(): int
-    {
-        return Response::HTTP_UNPROCESSABLE_ENTITY;
-    }
-
     public function getViolations(): array
     {
         return $this->violations;
+    }
+
+    protected function getDefaultStatusCode(): int
+    {
+        return Response::HTTP_UNPROCESSABLE_ENTITY;
     }
 }

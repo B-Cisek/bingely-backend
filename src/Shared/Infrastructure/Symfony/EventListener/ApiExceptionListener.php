@@ -18,8 +18,7 @@ final readonly class ApiExceptionListener
     public function __construct(
         private LoggerInterface $logger,
         private string $environment
-    ) {
-    }
+    ) {}
 
     public function onKernelException(ExceptionEvent $event): void
     {
@@ -27,7 +26,7 @@ final readonly class ApiExceptionListener
 
         $this->logger->error($exception->getMessage(), [
             'exception' => $exception,
-            'trace' => $exception->getTraceAsString()
+            'trace' => $exception->getTraceAsString(),
         ]);
 
         $statusCode = $exception instanceof HttpExceptionInterface
@@ -38,7 +37,7 @@ final readonly class ApiExceptionListener
             'error' => [
                 'message' => $this->getErrorMessage($exception, $statusCode),
                 'code' => $statusCode,
-            ]
+            ],
         ];
 
         if ($exception instanceof UnprocessableEntityHttpException) {
@@ -59,7 +58,7 @@ final readonly class ApiExceptionListener
                 'message' => $exception->getMessage(),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
-                'trace' => $exception->getTraceAsString()
+                'trace' => $exception->getTraceAsString(),
             ];
         }
 
