@@ -33,5 +33,8 @@ test:
 format:
 	docker compose exec bingely-app ./vendor/bin/php-cs-fixer fix --allow-risky=yes
 
+analyse:
+	docker compose exec bingely-app vendor/bin/phpstan analyse -l 6 src tests
+
 %:
 	@:
