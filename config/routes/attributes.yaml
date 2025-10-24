@@ -2,6 +2,6 @@ kernel:
     resource: ../../src/Shared/Infrastructure/Symfony/Kernel.php
     type: attribute
 
-app_controllers:
-    resource: ../../src/Application/UserInterface/Controller/
+user_controllers:
+    resource: ../../src/User/UserInterface/Controller/
     type: attribute

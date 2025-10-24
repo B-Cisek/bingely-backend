@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Bingely\Application\Domain\User\Entity;
+namespace Bingely\User\Domain\Entity;
 
-use Bingely\Application\Infrastructure\Doctrine\Repository\User\QueryRepository;
 use Bingely\Shared\Infrastructure\Doctrine\Trait\CreatedAtTrait;
 use Bingely\Shared\Infrastructure\Doctrine\Trait\UpdatedAtTrait;
+use Bingely\User\Infrastructure\Doctrine\Repository\QueryRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;

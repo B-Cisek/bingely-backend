@@ -21,9 +21,9 @@ doctrine:
             App:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Application/Domain/User/Entity'
-                prefix: 'Bingely\Application\Domain\User\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/User/Domain/Entity'
+                prefix: 'Bingely\User\Domain\Entity'
+                alias: User
         controller_resolver:
             auto_mapping: false
 

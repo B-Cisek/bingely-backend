@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Bingely\Application\Infrastructure\Doctrine\Repository\User;
+namespace Bingely\User\Infrastructure\Doctrine\Repository;
 
-use Bingely\Application\Domain\User\Entity\User;
+use Bingely\User\Domain\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
