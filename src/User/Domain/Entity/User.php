@@ -32,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /** @param list<string> $roles */
     public function __construct(
-        #[ORM\Column(type: Types::STRING ,length: 180, unique: true)]
+        #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
         private string $username,
         #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
         private string $email,
@@ -41,8 +41,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         private string $password,
         #[ORM\Column(type: Types::JSON)]
         private array $roles = []
-    )
+    ) {}
+
+    /**
+     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
+     */
+    public function __serialize(): array
     {
+        $data = (array) $this;
+        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
+
+        return $data;
     }
 
     public function getId(): Uuid
@@ -117,22 +126,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
         return $this;
     }
 
-    /**
-     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
-     */
-    public function __serialize(): array
-    {
-        $data = (array) $this;
-        $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
-
-        return $data;
-    }
-
     #[\Deprecated]
-    public function eraseCredentials(): void
-    {
-    }
+    public function eraseCredentials(): void {}
 }

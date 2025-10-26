@@ -19,6 +19,14 @@ services:
             - '../src/*/Domain/Entity/'
             - '../src/Shared/Infrastructure/Symfony/Kernel.php'
 
+    _instanceof:
+        Bingely\Shared\Application\Command\Sync\CommandHandler:
+            tags:
+                - { name: 'messenger.message_handler', bus: 'command.sync.bus' }
+        Bingely\Shared\Application\Command\Async\CommandHandler:
+            tags:
+                - { name: 'messenger.message_handler', bus: 'command.async.bus' }
+
     # API Exception Listener
     Bingely\Shared\Infrastructure\Symfony\EventListener\ApiExceptionListener:
         arguments:

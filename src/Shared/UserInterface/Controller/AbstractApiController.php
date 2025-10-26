@@ -13,17 +13,25 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\Service\Attribute\Required;
 
-abstract readonly class AbstractApiController
+abstract class AbstractApiController
 {
-    public function __construct(
+    protected SerializerInterface $serializer;
+
+    #[Required]
+    public function setSerializer(
         #[Autowire(service: 'serializer')]
-        protected SerializerInterface $serializer,
-    ) {
+        SerializerInterface $serializer
+    ): void {
+        $this->serializer = $serializer;
     }
 
     /**
      * Returns a JsonResponse with the given data.
+     *
+     * @param array<string, string|string[]> $headers
+     * @param array<string, mixed> $context
      */
     protected function json(
         mixed $data,
@@ -38,6 +46,8 @@ abstract readonly class AbstractApiController
 
     /**
      * Returns a success response with data.
+     *
+     * @param array<string, string|string[]> $headers
      */
     protected function success(
         mixed $data = null,
@@ -49,6 +59,8 @@ abstract readonly class AbstractApiController
 
     /**
      * Returns a created response (201).
+     *
+     * @param array<string, string|string[]> $headers
      */
     protected function created(mixed $data = null, array $headers = []): JsonResponse
     {
@@ -57,6 +69,8 @@ abstract readonly class AbstractApiController
 
     /**
      * Returns a no content response (204).
+     *
+     * @param array<string, string|string[]> $headers
      */
     protected function noContent(array $headers = []): Response
     {
@@ -97,6 +111,8 @@ abstract readonly class AbstractApiController
 
     /**
      * Throws a ValidationException.
+     *
+     * @param array<string, mixed> $errors
      */
     protected function validationError(array $errors, string $message = 'Validation Failed', ?\Throwable $previous = null): never
     {
