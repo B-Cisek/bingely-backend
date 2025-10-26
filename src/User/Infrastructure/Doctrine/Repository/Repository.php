@@ -17,4 +17,20 @@ class Repository extends ServiceEntityRepository
     {
         parent::__construct($registry, User::class);
     }
+
+    public function save(User $user): void
+    {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+
+    public function existsByUsername(string $username): bool
+    {
+        return $this->count(['username' => $username]) > 0;
+    }
+
+    public function existsByEmail(string $email): bool
+    {
+        return $this->count(['email' => $email]) > 0;
+    }
 }

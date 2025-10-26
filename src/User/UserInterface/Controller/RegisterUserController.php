@@ -20,10 +20,7 @@ class RegisterUserController extends AbstractApiController
     #[Route('/api/register', name: 'register', methods: ['POST'])]
     public function register(#[MapRequestPayload] RegisterUserRequest $request): Response
     {
-        try {
-            $this->syncCommandBus->dispatch($request->toCommand());
-        } catch (\Exception) {
-        }
+        $this->syncCommandBus->dispatch($request->toCommand());
 
         return $this->noContent();
     }

@@ -31,7 +31,7 @@ abstract class AbstractApiController
      * Returns a JsonResponse with the given data.
      *
      * @param array<string, string|string[]> $headers
-     * @param array<string, mixed> $context
+     * @param array<string, mixed>           $context
      */
     protected function json(
         mixed $data,
