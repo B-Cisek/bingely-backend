@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bingely\Shared\UserInterface\Request;
+namespace Bingely\User\UserInterface\Request;
 
 use Bingely\Shared\Application\Command\Sync\Command;
 use Bingely\User\Application\Command\Sync\RegisterUser;

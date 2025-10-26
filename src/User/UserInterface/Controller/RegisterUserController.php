@@ -6,7 +6,7 @@ namespace Bingely\User\UserInterface\Controller;
 
 use Bingely\Shared\Application\Command\Sync\CommandBus as SyncCommandBus;
 use Bingely\Shared\UserInterface\Controller\AbstractApiController;
-use Bingely\Shared\UserInterface\Request\RegisterUserRequest;
+use Bingely\User\UserInterface\Request\RegisterUserRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class RegisterUserController extends AbstractApiController
 {
     public function __construct(
-        private SyncCommandBus $syncCommandBus,
+        private readonly SyncCommandBus $syncCommandBus,
     ) {}
 
     #[Route('/api/register', name: 'register', methods: ['POST'])]
