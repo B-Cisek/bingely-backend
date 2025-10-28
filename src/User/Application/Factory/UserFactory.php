@@ -17,6 +17,7 @@ final readonly class UserFactory
         $user = new User(
             username: $command->username,
             email: $command->email,
+            roles: ['ROLE_USER']
         );
 
         $user->setPassword($this->passwordHasher->hashPassword($user, $command->password));

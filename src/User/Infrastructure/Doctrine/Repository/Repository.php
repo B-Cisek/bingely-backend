@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Bingely\User\Infrastructure\Doctrine\Repository;
 
 use Bingely\User\Domain\Entity\User;
+use Bingely\User\Domain\Repository\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<User>
  */
-class Repository extends ServiceEntityRepository
+class Repository extends ServiceEntityRepository implements UserRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -22,15 +23,5 @@ class Repository extends ServiceEntityRepository
     {
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
-    }
-
-    public function existsByUsername(string $username): bool
-    {
-        return $this->count(['username' => $username]) > 0;
-    }
-
-    public function existsByEmail(string $email): bool
-    {
-        return $this->count(['email' => $email]) > 0;
     }
 }
