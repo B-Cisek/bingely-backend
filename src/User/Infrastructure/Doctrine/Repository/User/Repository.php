@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bingely\User\Infrastructure\Doctrine\Repository;
+namespace Bingely\User\Infrastructure\Doctrine\Repository\User;
 
 use Bingely\User\Domain\Entity\User;
 use Bingely\User\Domain\Repository\UserRepositoryInterface;

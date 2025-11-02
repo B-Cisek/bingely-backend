@@ -7,13 +7,13 @@ namespace Bingely\User\Domain\Entity;
 use Bingely\Shared\Domain\Entity\BaseEntity;
 use Bingely\Shared\Infrastructure\Doctrine\Trait\CreatedAtTrait;
 use Bingely\Shared\Infrastructure\Doctrine\Trait\UpdatedAtTrait;
-use Bingely\User\Infrastructure\Doctrine\Query\UserExistsByEmailQuery;
+use Bingely\User\Infrastructure\Doctrine\Repository\User\Repository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserExistsByEmailQuery::class)]
+#[ORM\Entity(repositoryClass: Repository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 #[ORM\UniqueConstraint(name: 'UNIQ_EMAIL', fields: ['email'])]
