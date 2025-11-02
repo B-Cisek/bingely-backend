@@ -8,7 +8,7 @@ use Bingely\User\Application\Command\Sync\RegisterUser;
 use Bingely\User\Domain\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final readonly class UserFactory
+readonly class UserFactory
 {
     public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
 
