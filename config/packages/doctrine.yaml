@@ -30,6 +30,12 @@ doctrine:
                 dir: '%kernel.project_dir%/src/User/Domain/Entity'
                 prefix: 'Bingely\User\Domain\Entity'
                 alias: User
+            TvShow:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/TvShow/Domain/Entity'
+                prefix: 'Bingely\TvShow\Domain\Entity'
+                alias: TvShow
         controller_resolver:
             auto_mapping: false
 
