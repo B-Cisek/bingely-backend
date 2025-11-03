@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Bingely\TvShow\Infrastructure\Doctrine\Repository\TvShowGenre;
 
 use Bingely\TvShow\Domain\Entity\TvShowGenre;
+use Bingely\TvShow\Domain\Repository\TvShowGenreRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<TvShowGenre>
  */
-class Repository extends ServiceEntityRepository
+class Repository extends ServiceEntityRepository implements TvShowGenreRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -32,5 +33,15 @@ class Repository extends ServiceEntityRepository
         }
 
         $this->getEntityManager()->flush();
+    }
+
+    public function get(string $id): ?TvShowGenre
+    {
+        return $this->find($id);
+    }
+
+    public function getByTmdbId(int $tmdbId): ?TvShowGenre
+    {
+        return $this->findOneBy(['tmdbId' => $tmdbId]);
     }
 }

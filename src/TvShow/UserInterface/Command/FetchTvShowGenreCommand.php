@@ -6,11 +6,11 @@ namespace Bingely\TvShow\UserInterface\Command;
 
 use Bingely\Shared\Application\Command\Sync\CommandBus;
 use Bingely\TvShow\Application\Command\Sync\FetchTvShowGenresCommand;
-use Bingely\TvShow\Domain\Entity\TvShowGenre;
 use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
@@ -24,11 +24,25 @@ class FetchTvShowGenreCommand extends Command
         parent::__construct();
     }
 
+    protected function configure(): void
+    {
+        $this->addOption(
+            'language',
+            'l',
+            InputOption::VALUE_REQUIRED,
+            'Language for TV show genres (en, pl)',
+            'en'
+        );
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Fetching TV show genres...');
+        $languageValue = $input->getOption('language');
+        $language = Language::from($languageValue);
 
-        $this->commandBus->dispatch(new FetchTvShowGenresCommand());
+        $output->writeln(sprintf('Fetching TV show genres in %s...', $language->value));
+
+        $this->commandBus->dispatch(new FetchTvShowGenresCommand($language));
 
         $output->writeln('Genres fetched successfully!');
 

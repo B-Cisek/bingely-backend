@@ -9,7 +9,7 @@ use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language;
 
 final readonly class FetchTvShowGenresCommand implements Command
 {
-    public function __construct(Language $language = Language::ENGLISH)
+    public function __construct(public Language $language = Language::ENGLISH)
     {
     }
 }
