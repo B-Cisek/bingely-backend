@@ -14,6 +14,5 @@ final readonly class TvShowGenre
         public int $tmdbId,
         public string $name,
         public array $translations,
-    ) {
-    }
+    ) {}
 }

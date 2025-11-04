@@ -14,7 +14,7 @@ enum TmdbEndpoint: string
         $path = $this->value;
 
         foreach ($params as $key => $value) {
-            $path = str_replace('{' . $key . '}', (string) $value, $path);
+            $path = str_replace('{'.$key.'}', (string) $value, $path);
         }
 
         return $path;

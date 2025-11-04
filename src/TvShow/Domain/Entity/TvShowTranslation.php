@@ -18,20 +18,15 @@ class TvShowTranslation extends BaseEntity
         #[ORM\ManyToOne(targetEntity: TvShow::class, inversedBy: 'translations')]
         #[ORM\JoinColumn(nullable: false)]
         private TvShow $tvShow,
-
         #[Column(enumType: Language::class)]
         private Language $language,
-
         #[Column(type: Types::STRING)]
         private string $originalName,
-
         #[Column(type: Types::STRING)]
         private string $name,
-
         #[Column(type: Types::TEXT)]
         private string $overview
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -43,6 +38,7 @@ class TvShowTranslation extends BaseEntity
     public function setTvShow(TvShow $tvShow): TvShowTranslation
     {
         $this->tvShow = $tvShow;
+
         return $this;
     }
 
@@ -54,6 +50,7 @@ class TvShowTranslation extends BaseEntity
     public function setLanguage(Language $language): TvShowTranslation
     {
         $this->language = $language;
+
         return $this;
     }
 
@@ -65,6 +62,7 @@ class TvShowTranslation extends BaseEntity
     public function setOriginalName(string $originalName): TvShowTranslation
     {
         $this->originalName = $originalName;
+
         return $this;
     }
 
@@ -76,6 +74,7 @@ class TvShowTranslation extends BaseEntity
     public function setName(string $name): TvShowTranslation
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -87,6 +86,7 @@ class TvShowTranslation extends BaseEntity
     public function setOverview(string $overview): TvShowTranslation
     {
         $this->overview = $overview;
+
         return $this;
     }
 }

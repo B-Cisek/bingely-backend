@@ -18,17 +18,12 @@ class TvShowProvider implements TvShowProviderInterface
     public function __construct(
         private TmdbClientInterface $client,
         private TvShowTransformer $transformer,
-    ) {
-    }
-
+    ) {}
 
     /**
-     * Get popular TV shows
+     * Get popular TV shows.
      *
-     * @param Language $language
-     * @param int $page
      * @param array<FilterInterface> $filters
-     * @return TvShowCollectionDto
      */
     public function getPopular(
         Language $language = Language::ENGLISH,
@@ -46,12 +41,25 @@ class TvShowProvider implements TvShowProviderInterface
         return $this->applyFilters($collection, $filters);
     }
 
+    public function getGenres(Language $language = Language::ENGLISH): GenreCollectionDto
+    {
+        $data = $this->client->get(
+            endpoint: TmdbEndpoint::TV_GENRE,
+            language: $language,
+        );
+
+        return new GenreCollectionDto(
+            array_map(fn (array $item) => new GenreDto(
+                tmdbId: $item['id'],
+                name: $item['name'],
+            ), $data['genres']),
+        );
+    }
+
     /**
-     * Apply filters to TV show collection
+     * Apply filters to TV show collection.
      *
-     * @param TvShowCollectionDto $collection
      * @param array<FilterInterface> $filters
-     * @return TvShowCollectionDto
      */
     private function applyFilters(TvShowCollectionDto $collection, array $filters): TvShowCollectionDto
     {
@@ -70,21 +78,6 @@ class TvShowProvider implements TvShowProviderInterface
             results: $results,
             totalPages: $collection->totalPages,
             totalResults: count($results),
-        );
-    }
-
-    public function getGenres(Language $language = Language::ENGLISH): GenreCollectionDto
-    {
-        $data = $this->client->get(
-            endpoint: TmdbEndpoint::TV_GENRE,
-            language: $language,
-        );
-
-        return new GenreCollectionDto(
-            array_map(fn (array $item) => new GenreDto(
-                tmdbId: $item['id'],
-                name: $item['name'],
-            ), $data['genres']),
         );
     }
 }

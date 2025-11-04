@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace Bingely\TvShow\Infrastructure\Doctrine\Query\TvShowGenre;
 
@@ -25,9 +25,10 @@ class GetAllTvShowGenresQuery extends ServiceEntityRepository implements GetAllT
     {
         $result = $this->createQueryBuilder('tvg')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
 
-        $tvShowGenresDto = array_map(fn(TvShowGenre $tvShowGenre) => new TvShowGenreResult(
+        $tvShowGenresDto = array_map(fn (TvShowGenre $tvShowGenre) => new TvShowGenreResult(
             id: $tvShowGenre->getId()->toRfc4122(),
             tmdbId: $tvShowGenre->getTmdbId(),
             name: $tvShowGenre->getName(),

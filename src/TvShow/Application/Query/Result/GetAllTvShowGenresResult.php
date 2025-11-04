@@ -11,6 +11,5 @@ final readonly class GetAllTvShowGenresResult
      */
     public function __construct(
         public array $genres,
-    ) {
-    }
+    ) {}
 }

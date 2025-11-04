@@ -20,8 +20,7 @@ final readonly class TvShowDto
         public array $genreIds,
         public array $originCountry,
         public string $originalLanguage,
-    ) {
-    }
+    ) {}
 
     public function getPosterUrl(?string $size = 'w500'): ?string
     {

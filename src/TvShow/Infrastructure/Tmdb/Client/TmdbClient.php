@@ -19,13 +19,14 @@ final readonly class TmdbClient implements TmdbClientInterface
 
     public function __construct(
         private HttpClientInterface $client,
-        #[Autowire(param: "tmdb.api.key")] private string $apiKey,
+        #[Autowire(param: 'tmdb.api.key')]
+        private string $apiKey,
         private LoggerInterface $logger,
     ) {}
 
-    public function get(TmdbEndpoint $endpoint, array $queryParams = [], Language $language = Language::ENGLISH,): array
+    public function get(TmdbEndpoint $endpoint, array $queryParams = [], Language $language = Language::ENGLISH): array
     {
-        $url = self::BASE_URL . $endpoint->getPath($queryParams);
+        $url = self::BASE_URL.$endpoint->getPath($queryParams);
 
         $queryParams = [
             'api_key' => $this->apiKey,
@@ -43,7 +44,7 @@ final readonly class TmdbClient implements TmdbClientInterface
             $response = $this->client->request('GET', $url, [
                 'query' => $queryParams,
                 'headers' => [
-                    'accept' => 'application/json'
+                    'accept' => 'application/json',
                 ],
             ]);
 
@@ -52,7 +53,7 @@ final readonly class TmdbClient implements TmdbClientInterface
 
             if ($statusCode >= 400) {
                 throw new TmdbApiException(
-                    $data["status_message"] ?? "TMDB API error",
+                    $data['status_message'] ?? 'TMDB API error',
                     $statusCode,
                     $data,
                 );
@@ -60,20 +61,20 @@ final readonly class TmdbClient implements TmdbClientInterface
 
             return $data;
         } catch (TransportExceptionInterface $e) {
-            $this->logger->error("TMDB API Transport Error", [
-                "endpoint" => $endpoint->value,
-                "error" => $e->getMessage(),
+            $this->logger->error('TMDB API Transport Error', [
+                'endpoint' => $endpoint->value,
+                'error' => $e->getMessage(),
             ]);
 
             throw new TmdbException(
-                "Failed to connect to TMDB API: " . $e->getMessage(),
+                'Failed to connect to TMDB API: '.$e->getMessage(),
                 previous: $e,
             );
         } catch (TmdbApiException $e) {
-            $this->logger->error("TMDB API Error", [
-                "endpoint" => $endpoint->value,
-                "status_code" => $e->getStatusCode(),
-                "response" => $e->getResponseData(),
+            $this->logger->error('TMDB API Error', [
+                'endpoint' => $endpoint->value,
+                'status_code' => $e->getStatusCode(),
+                'response' => $e->getResponseData(),
             ]);
 
             throw $e;

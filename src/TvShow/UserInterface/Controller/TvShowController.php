@@ -11,9 +11,7 @@ class TvShowController
 {
     public function __construct(
         private TvShowProviderInterface $tvShowProvider,
-    )
-    {
-    }
+    ) {}
 
     #[Route('/api/tv-show/', name: 'tv-show', methods: ['GET'])]
     public function test()

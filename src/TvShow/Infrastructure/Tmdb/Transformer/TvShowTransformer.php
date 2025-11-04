@@ -31,7 +31,7 @@ final class TvShowTransformer implements TransformerInterface
     public function transformCollection(array $data): TvShowCollectionDto
     {
         $results = array_map(
-            fn(array $item) => $this->transform($item),
+            fn (array $item) => $this->transform($item),
             $data['results'] ?? []
         );
 

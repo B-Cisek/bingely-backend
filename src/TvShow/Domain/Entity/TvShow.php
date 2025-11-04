@@ -21,43 +21,6 @@ class TvShow extends BaseEntity
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
-    public function __construct(
-        #[ORM\Column(type: Types::INTEGER, unique: true)]
-        private int $tmdbId,
-
-        #[ORM\Column(type: Types::BOOLEAN)]
-        private bool $isAdult,
-
-        #[ORM\Column(type: Types::STRING, length: 255)]
-        private string $backdropPath,
-
-        #[ORM\Column(type: Types::JSON)]
-        private array $originCountry,
-
-        #[ORM\Column(enumType: Language::class)]
-        private Language $originalLanguage,
-
-        #[ORM\Column(type: Types::FLOAT)]
-        private float $popularity,
-
-        #[ORM\Column(type: Types::STRING, length: 255)]
-        private string $posterPath,
-
-        #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-        private \DateTimeImmutable $firstAirDate,
-
-        #[ORM\Column(type: Types::FLOAT)]
-        private float $voteAverage,
-
-        #[ORM\Column(type: Types::INTEGER)]
-        private int $voteCount,
-    ) {
-        parent::__construct();
-        $this->createdAt = new \DateTimeImmutable();
-        $this->genres = new ArrayCollection();
-        $this->translations = new ArrayCollection();
-    }
-
     #[ORM\ManyToMany(targetEntity: TvShowGenre::class)]
     #[ORM\JoinTable(name: 'tv_show_genre_mapping')]
     #[ORM\JoinColumn(name: 'tv_show_id', referencedColumnName: 'id')]
@@ -67,6 +30,34 @@ class TvShow extends BaseEntity
     #[ORM\OneToMany(targetEntity: TvShowTranslation::class, mappedBy: 'tvShow', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $translations;
 
+    public function __construct(
+        #[ORM\Column(type: Types::INTEGER, unique: true)]
+        private int $tmdbId,
+        #[ORM\Column(type: Types::BOOLEAN)]
+        private bool $isAdult,
+        #[ORM\Column(type: Types::STRING, length: 255)]
+        private string $backdropPath,
+        #[ORM\Column(type: Types::JSON)]
+        private array $originCountry,
+        #[ORM\Column(enumType: Language::class)]
+        private Language $originalLanguage,
+        #[ORM\Column(type: Types::FLOAT)]
+        private float $popularity,
+        #[ORM\Column(type: Types::STRING, length: 255)]
+        private string $posterPath,
+        #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+        private \DateTimeImmutable $firstAirDate,
+        #[ORM\Column(type: Types::FLOAT)]
+        private float $voteAverage,
+        #[ORM\Column(type: Types::INTEGER)]
+        private int $voteCount,
+    ) {
+        parent::__construct();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->genres = new ArrayCollection();
+        $this->translations = new ArrayCollection();
+    }
+
     public function getTmdbId(): int
     {
         return $this->tmdbId;
@@ -75,6 +66,7 @@ class TvShow extends BaseEntity
     public function setTmdbId(int $tmdbId): TvShow
     {
         $this->tmdbId = $tmdbId;
+
         return $this;
     }
 
@@ -86,6 +78,7 @@ class TvShow extends BaseEntity
     public function setIsAdult(bool $isAdult): TvShow
     {
         $this->isAdult = $isAdult;
+
         return $this;
     }
 
@@ -97,6 +90,7 @@ class TvShow extends BaseEntity
     public function setBackdropPath(string $backdropPath): TvShow
     {
         $this->backdropPath = $backdropPath;
+
         return $this;
     }
 
@@ -108,6 +102,7 @@ class TvShow extends BaseEntity
     public function setOriginCountry(array $originCountry): TvShow
     {
         $this->originCountry = $originCountry;
+
         return $this;
     }
 
@@ -119,6 +114,7 @@ class TvShow extends BaseEntity
     public function setOriginalLanguage(Language $originalLanguage): TvShow
     {
         $this->originalLanguage = $originalLanguage;
+
         return $this;
     }
 
@@ -130,6 +126,7 @@ class TvShow extends BaseEntity
     public function setPopularity(float $popularity): TvShow
     {
         $this->popularity = $popularity;
+
         return $this;
     }
 
@@ -141,6 +138,7 @@ class TvShow extends BaseEntity
     public function setPosterPath(string $posterPath): TvShow
     {
         $this->posterPath = $posterPath;
+
         return $this;
     }
 
@@ -152,6 +150,7 @@ class TvShow extends BaseEntity
     public function setFirstAirDate(\DateTimeImmutable $firstAirDate): TvShow
     {
         $this->firstAirDate = $firstAirDate;
+
         return $this;
     }
 
@@ -163,6 +162,7 @@ class TvShow extends BaseEntity
     public function setVoteAverage(float $voteAverage): TvShow
     {
         $this->voteAverage = $voteAverage;
+
         return $this;
     }
 
@@ -174,6 +174,7 @@ class TvShow extends BaseEntity
     public function setVoteCount(int $voteCount): TvShow
     {
         $this->voteCount = $voteCount;
+
         return $this;
     }
 
@@ -190,12 +191,14 @@ class TvShow extends BaseEntity
         if (!$this->genres->contains($genre)) {
             $this->genres->add($genre);
         }
+
         return $this;
     }
 
     public function removeGenre(TvShowGenre $genre): self
     {
         $this->genres->removeElement($genre);
+
         return $this;
     }
 
@@ -213,6 +216,7 @@ class TvShow extends BaseEntity
             $this->translations->add($translation);
             $translation->setTvShow($this);
         }
+
         return $this;
     }
 
@@ -223,6 +227,7 @@ class TvShow extends BaseEntity
                 $translation->setTvShow(null);
             }
         }
+
         return $this;
     }
 }

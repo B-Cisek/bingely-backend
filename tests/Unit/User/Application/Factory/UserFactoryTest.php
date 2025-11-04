@@ -10,6 +10,11 @@ use Bingely\User\Domain\Entity\User;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class UserFactoryTest extends TestCase
 {
     private UserPasswordHasherInterface $passwordHasher;
@@ -38,7 +43,8 @@ final class UserFactoryTest extends TestCase
                 $this->callback(fn (User $user) => $user->getUsername() === 'testuser' && $user->getEmail() === 'test@example.com'),
                 'plain-password'
             )
-            ->willReturn($hashedPassword);
+            ->willReturn($hashedPassword)
+        ;
 
         // Act
         $user = $this->factory->fromCommand($command);
@@ -63,7 +69,8 @@ final class UserFactoryTest extends TestCase
         $this->passwordHasher
             ->expects($this->once())
             ->method('hashPassword')
-            ->willReturn($hashedPassword);
+            ->willReturn($hashedPassword)
+        ;
 
         // Act
         $user = $this->factory->fromCommand($command);
@@ -84,7 +91,8 @@ final class UserFactoryTest extends TestCase
 
         $this->passwordHasher
             ->method('hashPassword')
-            ->willReturn('hashed-password');
+            ->willReturn('hashed-password')
+        ;
 
         // Act
         $user = $this->factory->fromCommand($command);

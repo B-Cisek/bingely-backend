@@ -8,6 +8,11 @@ use Bingely\Tests\Functional\WebTestCase;
 use Bingely\User\Domain\Entity\User;
 use Bingely\User\Domain\Repository\UserRepositoryInterface;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class RegisterUserControllerTest extends WebTestCase
 {
     private UserRepositoryInterface $userRepository;
@@ -15,7 +20,7 @@ final class RegisterUserControllerTest extends WebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->userRepository = static::getContainer()->get(UserRepositoryInterface::class);
+        $this->userRepository = self::getContainer()->get(UserRepositoryInterface::class);
     }
 
     public function testSuccessfulUserRegistration(): void
@@ -29,7 +34,6 @@ final class RegisterUserControllerTest extends WebTestCase
 
         // Act
         $this->jsonRequest('POST', '/api/register', $userData);
-
 
         // Assert
         $this->assertResponseStatusCodeSame(204);

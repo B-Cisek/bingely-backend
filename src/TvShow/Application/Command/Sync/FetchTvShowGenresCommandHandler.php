@@ -7,8 +7,9 @@ namespace Bingely\TvShow\Application\Command\Sync;
 use Bingely\Shared\Application\Command\Sync\CommandHandler;
 use Bingely\TvShow\Application\Factory\TvShowGenreFactory;
 use Bingely\TvShow\Application\Query\GetAllTvShowGenres;
+use Bingely\TvShow\Domain\Enum\Language;
 use Bingely\TvShow\Domain\Repository\TvShowGenreRepository;
-use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language;
+use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language as InternalLanguage;
 use Bingely\TvShow\Infrastructure\Tmdb\Genre\GenreCollectionDto;
 use Bingely\TvShow\Infrastructure\Tmdb\Provider\TvShowProviderInterface;
 
@@ -19,14 +20,12 @@ final readonly class FetchTvShowGenresCommandHandler implements CommandHandler
         private GetAllTvShowGenres $getAllTvShowGenres,
         private TvShowGenreFactory $tvShowGenreFactory,
         private TvShowGenreRepository $tvShowGenreRepository,
-    )
-    {
-    }
+    ) {}
 
     public function __invoke(FetchTvShowGenresCommand $command): void
     {
         $existTvShowGenres = $this->getMapTvShowGenres();
-        $tvShowGenres = $this->tvShowProvider->getGenres($command->language);
+        $tvShowGenres = $this->tvShowProvider->getGenres(InternalLanguage::from($command->language->value));
 
         if (empty($existTvShowGenres) && $command->language === Language::ENGLISH) {
             $this->handleFirstFetch($tvShowGenres);
@@ -36,11 +35,14 @@ final readonly class FetchTvShowGenresCommandHandler implements CommandHandler
             foreach ($tvShowGenres->genres as $tvShowGenre) {
                 if (isset($existTvShowGenres[(string) $tvShowGenre->tmdbId])) {
                     $tvShowGenreEntity = $this->tvShowGenreRepository->getByTmdbId($tvShowGenre->tmdbId);
-                    $tvShowGenreEntity->setTranslations([
-                        ...$tvShowGenreEntity->getTranslations(),
-                        $command->language->value => $tvShowGenre->name,
-                    ]);
-                    $this->tvShowGenreRepository->save($tvShowGenreEntity);
+
+                    if ($tvShowGenreEntity !== null) {
+                        $tvShowGenreEntity->addTranslation(
+                            language: $command->language,
+                            name: $tvShowGenre->name
+                        );
+                        $this->tvShowGenreRepository->save($tvShowGenreEntity);
+                    }
                 }
             }
         }

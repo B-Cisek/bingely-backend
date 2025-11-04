@@ -18,6 +18,11 @@ use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Uuid;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class RegisterUserHandlerTest extends TestCase
 {
     private EventDispatcherInterface $eventDispatcher;
@@ -61,31 +66,36 @@ final class RegisterUserHandlerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->with('testuser')
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $this->userExistsByEmailQuery
             ->expects($this->once())
             ->method('execute')
             ->with('test@example.com')
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $this->userFactory
             ->expects($this->once())
             ->method('fromCommand')
             ->with($command)
-            ->willReturn($user);
+            ->willReturn($user)
+        ;
 
         $this->repository
             ->expects($this->once())
             ->method('save')
-            ->with($user);
+            ->with($user)
+        ;
 
         $this->eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
             ->with($this->callback(function (UserRegistered $event) use ($userId) {
                 return $event->userId === $userId->toString();
-            }));
+            }))
+        ;
 
         // Act
         ($this->handler)($command);
@@ -106,23 +116,28 @@ final class RegisterUserHandlerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->with('existinguser')
-            ->willReturn(true);
+            ->willReturn(true)
+        ;
 
         $this->userExistsByEmailQuery
             ->expects($this->never())
-            ->method('execute');
+            ->method('execute')
+        ;
 
         $this->userFactory
             ->expects($this->never())
-            ->method('fromCommand');
+            ->method('fromCommand')
+        ;
 
         $this->repository
             ->expects($this->never())
-            ->method('save');
+            ->method('save')
+        ;
 
         $this->eventDispatcher
             ->expects($this->never())
-            ->method('dispatch');
+            ->method('dispatch')
+        ;
 
         // Assert
         $this->expectException(UsernameAlreadyExistsException::class);
@@ -145,25 +160,30 @@ final class RegisterUserHandlerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->with('testuser')
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $this->userExistsByEmailQuery
             ->expects($this->once())
             ->method('execute')
             ->with('existing@example.com')
-            ->willReturn(true);
+            ->willReturn(true)
+        ;
 
         $this->userFactory
             ->expects($this->never())
-            ->method('fromCommand');
+            ->method('fromCommand')
+        ;
 
         $this->repository
             ->expects($this->never())
-            ->method('save');
+            ->method('save')
+        ;
 
         $this->eventDispatcher
             ->expects($this->never())
-            ->method('dispatch');
+            ->method('dispatch')
+        ;
 
         // Assert
         $this->expectException(EmailAlreadyExistsException::class);
@@ -188,15 +208,18 @@ final class RegisterUserHandlerTest extends TestCase
 
         $this->userExistsByUsernameQuery
             ->method('execute')
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $this->userExistsByEmailQuery
             ->method('execute')
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $this->userFactory
             ->method('fromCommand')
-            ->willReturn($user);
+            ->willReturn($user)
+        ;
 
         $dispatchedEvent = null;
         $this->eventDispatcher
@@ -204,8 +227,10 @@ final class RegisterUserHandlerTest extends TestCase
             ->method('dispatch')
             ->willReturnCallback(function ($event) use (&$dispatchedEvent) {
                 $dispatchedEvent = $event;
+
                 return $event;
-            });
+            })
+        ;
 
         // Act
         ($this->handler)($command);
@@ -229,7 +254,8 @@ final class RegisterUserHandlerTest extends TestCase
             ->expects($this->once())
             ->method('execute')
             ->with('existinguser')
-            ->willReturn(true);
+            ->willReturn(true)
+        ;
 
         // Email check should never be called because username check fails first
         $this->userExistsByEmailQuery

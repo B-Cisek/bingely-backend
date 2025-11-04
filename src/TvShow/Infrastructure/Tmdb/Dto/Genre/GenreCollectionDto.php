@@ -9,7 +9,5 @@ final readonly class GenreCollectionDto
     /** @param array<int, GenreDto> $genres */
     public function __construct(
         public array $genres,
-    )
-    {
-    }
+    ) {}
 }

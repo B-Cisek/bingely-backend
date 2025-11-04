@@ -14,14 +14,13 @@ final readonly class TvShowCollectionDto
         public array $results,
         public int $totalPages,
         public int $totalResults,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {
         return [
             'page' => $this->page,
-            'results' => array_map(fn(TvShowDto $tvShow) => $tvShow->toArray(), $this->results),
+            'results' => array_map(fn (TvShowDto $tvShow) => $tvShow->toArray(), $this->results),
             'total_pages' => $this->totalPages,
             'total_results' => $this->totalResults,
         ];
