@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Bingely\Shared\Infrastructure\Symfony\EventListener;
 
+use Bingely\Shared\Domain\Exception\ConflictDomainException;
 use Bingely\Shared\Infrastructure\Symfony\Exception\ValidationException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,9 +30,7 @@ final readonly class ApiExceptionListener
             'trace' => $exception->getTraceAsString(),
         ]);
 
-        $statusCode = $exception instanceof HttpExceptionInterface
-            ? $exception->getStatusCode()
-            : Response::HTTP_INTERNAL_SERVER_ERROR;
+        $statusCode = $this->getStatusCode($exception);
 
         $responseData = [
             'error' => [
@@ -64,6 +63,19 @@ final readonly class ApiExceptionListener
 
         $response = new JsonResponse($responseData, $statusCode);
         $event->setResponse($response);
+    }
+
+    private function getStatusCode(\Throwable $exception): int
+    {
+        if ($exception instanceof HttpExceptionInterface) {
+            return $exception->getStatusCode();
+        }
+
+        if ($exception instanceof ConflictDomainException) {
+            return Response::HTTP_CONFLICT;
+        }
+
+        return Response::HTTP_INTERNAL_SERVER_ERROR;
     }
 
     private function getErrorMessage(\Throwable $exception, int $statusCode): string

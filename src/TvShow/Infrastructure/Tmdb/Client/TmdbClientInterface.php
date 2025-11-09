@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bingely\TvShow\Infrastructure\Tmdb\Client;
 
-use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language;
+use Bingely\TvShow\Domain\Enum\Language;
 use Bingely\TvShow\Infrastructure\Tmdb\Enum\TmdbEndpoint;
 
 interface TmdbClientInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bingely\TvShow\UserInterface\Controller;
 
-use Bingely\TvShow\Infrastructure\Tmdb\Provider\TvShowProviderInterface;
+use Bingely\TvShow\Application\Provider\TvShowProviderInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class TvShowController

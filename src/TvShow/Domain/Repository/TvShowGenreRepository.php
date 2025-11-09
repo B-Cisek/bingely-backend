@@ -15,4 +15,7 @@ interface TvShowGenreRepository
     public function get(string $id): ?TvShowGenre;
 
     public function getByTmdbId(int $tmdbId): ?TvShowGenre;
+
+    /** @return array<int, TvShowGenre> */
+    public function getAll(): array;
 }

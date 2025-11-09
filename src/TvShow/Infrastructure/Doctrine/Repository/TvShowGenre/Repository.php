@@ -44,4 +44,9 @@ class Repository extends ServiceEntityRepository implements TvShowGenreRepositor
     {
         return $this->findOneBy(['tmdbId' => $tmdbId]);
     }
+
+    public function getAll(): array
+    {
+        return $this->findAll();
+    }
 }

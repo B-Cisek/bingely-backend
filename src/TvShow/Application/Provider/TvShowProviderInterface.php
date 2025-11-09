@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Bingely\TvShow\Infrastructure\Tmdb\Provider;
+namespace Bingely\TvShow\Application\Provider;
 
+use Bingely\TvShow\Application\Dto\Genre\GenreCollectionDto;
+use Bingely\TvShow\Domain\Enum\Language;
 use Bingely\TvShow\Infrastructure\Tmdb\Dto\TvShowCollectionDto;
-use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language;
-use Bingely\TvShow\Infrastructure\Tmdb\Genre\GenreCollectionDto;
 
 interface TvShowProviderInterface
 {

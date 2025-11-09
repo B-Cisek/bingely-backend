@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Bingely\TvShow\Infrastructure\Tmdb\Provider;
 
+use Bingely\TvShow\Application\Dto\Genre\GenreCollectionDto;
+use Bingely\TvShow\Application\Dto\Genre\GenreDto;
+use Bingely\TvShow\Application\Provider\TvShowProviderInterface;
+use Bingely\TvShow\Domain\Enum\Language;
 use Bingely\TvShow\Infrastructure\Tmdb\Client\TmdbClientInterface;
 use Bingely\TvShow\Infrastructure\Tmdb\Dto\TvShowCollectionDto;
-use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language;
 use Bingely\TvShow\Infrastructure\Tmdb\Enum\TmdbEndpoint;
 use Bingely\TvShow\Infrastructure\Tmdb\Filter\FilterInterface;
-use Bingely\TvShow\Infrastructure\Tmdb\Genre\GenreCollectionDto;
-use Bingely\TvShow\Infrastructure\Tmdb\Genre\GenreDto;
 use Bingely\TvShow\Infrastructure\Tmdb\Transformer\TvShowTransformer;
 
 class TvShowProvider implements TvShowProviderInterface

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Bingely\TvShow\Domain\Entity;
 
 use Bingely\Shared\Domain\Entity\BaseEntity;
-use Bingely\Shared\Infrastructure\Doctrine\Trait\CreatedAtTrait;
-use Bingely\Shared\Infrastructure\Doctrine\Trait\UpdatedAtTrait;
+use Bingely\Shared\Domain\Trait\CreatedAtTrait;
+use Bingely\Shared\Domain\Trait\UpdatedAtTrait;
 use Bingely\TvShow\Domain\Enum\Language;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bingely\Shared\Infrastructure\Doctrine\Trait;
+namespace Bingely\Shared\Domain\Trait;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;

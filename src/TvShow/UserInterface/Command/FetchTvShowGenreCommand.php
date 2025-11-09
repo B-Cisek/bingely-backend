@@ -6,7 +6,7 @@ namespace Bingely\TvShow\UserInterface\Command;
 
 use Bingely\Shared\Application\Command\Sync\CommandBus;
 use Bingely\TvShow\Application\Command\Sync\FetchTvShowGenresCommand;
-use Bingely\TvShow\Infrastructure\Tmdb\Enum\Language;
+use Bingely\TvShow\Domain\Enum\Language;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

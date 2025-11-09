@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bingely\TvShow\Infrastructure\Tmdb\Genre;
+namespace Bingely\TvShow\Application\Dto\Genre;
 
 final readonly class GenreDto
 {
