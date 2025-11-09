@@ -8,6 +8,7 @@ use Bingely\Shared\Application\Command\Sync\CommandHandler;
 use Bingely\TvShow\Application\Dto\Genre\GenreCollectionDto;
 use Bingely\TvShow\Application\Factory\TvShowGenreFactory;
 use Bingely\TvShow\Application\Provider\TvShowProviderInterface;
+use Bingely\TvShow\Domain\Entity\TvShowGenre;
 use Bingely\TvShow\Domain\Enum\Language;
 use Bingely\TvShow\Domain\Repository\TvShowGenreRepository;
 
@@ -46,6 +47,7 @@ final readonly class FetchTvShowGenresCommandHandler implements CommandHandler
         }
     }
 
+    /** @return array<int, TvShowGenre> */
     private function getMapTvShowGenres(): array
     {
         $tvShowGenres = $this->repository->getAll();

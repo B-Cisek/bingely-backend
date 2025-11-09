@@ -21,12 +21,18 @@ class TvShow extends BaseEntity
     use CreatedAtTrait;
     use UpdatedAtTrait;
 
+    /**
+     * @var Collection<int, TvShowGenre>
+     */
     #[ORM\ManyToMany(targetEntity: TvShowGenre::class)]
     #[ORM\JoinTable(name: 'tv_show_genre_mapping')]
     #[ORM\JoinColumn(name: 'tv_show_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'tv_show_genre_id', referencedColumnName: 'id')]
     private Collection $genres;
 
+    /**
+     * @var Collection<int, TvShowTranslation>
+     */
     #[ORM\OneToMany(targetEntity: TvShowTranslation::class, mappedBy: 'tvShow', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $translations;
 
@@ -37,6 +43,7 @@ class TvShow extends BaseEntity
         private bool $isAdult,
         #[ORM\Column(type: Types::STRING, length: 255)]
         private string $backdropPath,
+        /** @var array<int, string> */
         #[ORM\Column(type: Types::JSON)]
         private array $originCountry,
         #[ORM\Column(enumType: Language::class)]
@@ -94,11 +101,17 @@ class TvShow extends BaseEntity
         return $this;
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getOriginCountry(): array
     {
         return $this->originCountry;
     }
 
+    /**
+     * @param array<int, string> $originCountry
+     */
     public function setOriginCountry(array $originCountry): TvShow
     {
         $this->originCountry = $originCountry;
@@ -222,11 +235,7 @@ class TvShow extends BaseEntity
 
     public function removeTranslation(TvShowTranslation $translation): self
     {
-        if ($this->translations->removeElement($translation)) {
-            if ($translation->getTvShow() === $this) {
-                $translation->setTvShow(null);
-            }
-        }
+        $this->translations->removeElement($translation);
 
         return $this;
     }

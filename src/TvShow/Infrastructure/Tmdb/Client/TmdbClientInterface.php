@@ -9,6 +9,10 @@ use Bingely\TvShow\Infrastructure\Tmdb\Enum\TmdbEndpoint;
 
 interface TmdbClientInterface
 {
+    /**
+     * @param array<string, string|int> $queryParams
+     * @return array<string, mixed>
+     */
     public function get(
         TmdbEndpoint $endpoint,
         array $queryParams = [],

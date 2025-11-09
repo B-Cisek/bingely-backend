@@ -16,6 +16,7 @@ final readonly class TvShowCollectionDto
         public int $totalResults,
     ) {}
 
+    /** @return array<string, mixed> */
     public function toArray(): array
     {
         return [

@@ -8,6 +8,7 @@ use Bingely\TvShow\Domain\Entity\TvShowGenre;
 
 readonly class TvShowGenreFactory
 {
+    /** @param array<string, string> $translations */
     public function create(int $tmdbId, string $name, array $translations = []): TvShowGenre
     {
         return new TvShowGenre(

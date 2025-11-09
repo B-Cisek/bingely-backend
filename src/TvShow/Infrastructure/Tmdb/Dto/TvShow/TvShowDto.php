@@ -6,6 +6,10 @@ namespace Bingely\TvShow\Infrastructure\Tmdb\Dto;
 
 final readonly class TvShowDto
 {
+    /**
+     * @param array<int, int> $genreIds
+     * @param array<int, string> $originCountry
+     */
     public function __construct(
         public int $id,
         public string $name,
@@ -36,6 +40,9 @@ final readonly class TvShowDto
             : null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

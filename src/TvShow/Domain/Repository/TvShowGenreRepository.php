@@ -10,6 +10,7 @@ interface TvShowGenreRepository
 {
     public function save(TvShowGenre $tvShowGenre): void;
 
+    /** @param array<int, TvShowGenre> $tvShowGenres */
     public function saveMany(array $tvShowGenres): void;
 
     public function get(string $id): ?TvShowGenre;

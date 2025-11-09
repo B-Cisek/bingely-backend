@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\Column;
 #[ORM\Table(name: '`tv_show_genre`')]
 class TvShowGenre extends BaseEntity
 {
+    /** @param array<string, string> $translations */
     public function __construct(
         #[Column(type: Types::INTEGER, unique: true)]
         private int $tmdbId,
@@ -49,11 +50,13 @@ class TvShowGenre extends BaseEntity
         return $this;
     }
 
+    /** @return array<string, string> */
     public function getTranslations(): array
     {
         return $this->translations;
     }
 
+    /** @param array<string, string> $translations */
     public function setTranslations(array $translations): TvShowGenre
     {
         $this->translations = $translations;

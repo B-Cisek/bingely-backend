@@ -14,7 +14,7 @@ class TvShowController
     ) {}
 
     #[Route('/api/tv-show/', name: 'tv-show', methods: ['GET'])]
-    public function test()
+    public function test(): void
     {
         $result = $this->tvShowProvider->getGenres();
 

@@ -6,6 +6,9 @@ namespace Bingely\TvShow\Infrastructure\Tmdb\Exception;
 
 class TmdbApiException extends TmdbException
 {
+    /**
+     * @param array<string, mixed>|null $responseData
+     */
     public function __construct(
         string $message,
         private readonly int $statusCode,
@@ -19,6 +22,9 @@ class TmdbApiException extends TmdbException
         return $this->statusCode;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function getResponseData(): ?array
     {
         return $this->responseData;

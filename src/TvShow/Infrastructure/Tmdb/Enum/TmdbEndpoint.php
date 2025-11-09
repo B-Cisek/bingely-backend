@@ -9,6 +9,7 @@ enum TmdbEndpoint: string
     case TV_POPULAR = '/tv/popular';
     case TV_GENRE = '/genre/tv/list';
 
+    /** @param array<string, string> $params */
     public function getPath(array $params = []): string
     {
         $path = $this->value;
