@@ -84,6 +84,10 @@ final readonly class ApiExceptionListener
             return $exception->getMessage() ?: $this->getDefaultMessage($statusCode);
         }
 
+        if ($exception instanceof ConflictDomainException) {
+            return $exception->getMessage();
+        }
+
         if ($this->environment !== 'dev') {
             return $this->getDefaultMessage($statusCode);
         }

@@ -7,12 +7,11 @@ namespace Bingely\Tests\Unit\User\Application\Command;
 use Bingely\User\Application\Command\Sync\RegisterUser;
 use Bingely\User\Application\Command\Sync\RegisterUserHandler;
 use Bingely\User\Application\Factory\UserFactory;
-use Bingely\User\Application\Query\UserExistsByEmail;
-use Bingely\User\Application\Query\UserExistsByUsername;
 use Bingely\User\Domain\Entity\User;
 use Bingely\User\Domain\Event\UserRegistered;
 use Bingely\User\Domain\Exception\EmailAlreadyExistsException;
 use Bingely\User\Domain\Exception\UsernameAlreadyExistsException;
+use Bingely\User\Domain\Repository\UserQueryRepositoryInterface;
 use Bingely\User\Domain\Repository\UserRepositoryInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -27,8 +26,7 @@ final class RegisterUserHandlerTest extends TestCase
 {
     private EventDispatcherInterface $eventDispatcher;
     private UserFactory $userFactory;
-    private UserExistsByUsername $userExistsByUsernameQuery;
-    private UserExistsByEmail $userExistsByEmailQuery;
+    private UserQueryRepositoryInterface $userQueryRepository;
     private UserRepositoryInterface $repository;
     private RegisterUserHandler $handler;
 
@@ -36,15 +34,13 @@ final class RegisterUserHandlerTest extends TestCase
     {
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
         $this->userFactory = $this->createMock(UserFactory::class);
-        $this->userExistsByUsernameQuery = $this->createMock(UserExistsByUsername::class);
-        $this->userExistsByEmailQuery = $this->createMock(UserExistsByEmail::class);
+        $this->userQueryRepository = $this->createMock(UserQueryRepositoryInterface::class);
         $this->repository = $this->createMock(UserRepositoryInterface::class);
 
         $this->handler = new RegisterUserHandler(
             $this->eventDispatcher,
             $this->userFactory,
-            $this->userExistsByUsernameQuery,
-            $this->userExistsByEmailQuery,
+            $this->userQueryRepository,
             $this->repository
         );
     }
@@ -62,16 +58,16 @@ final class RegisterUserHandlerTest extends TestCase
         $userId = Uuid::v4();
         $user->method('getId')->willReturn($userId);
 
-        $this->userExistsByUsernameQuery
+        $this->userQueryRepository
             ->expects($this->once())
-            ->method('execute')
+            ->method('existsByUsername')
             ->with('testuser')
             ->willReturn(false)
         ;
 
-        $this->userExistsByEmailQuery
+        $this->userQueryRepository
             ->expects($this->once())
-            ->method('execute')
+            ->method('existsByEmail')
             ->with('test@example.com')
             ->willReturn(false)
         ;
@@ -112,16 +108,16 @@ final class RegisterUserHandlerTest extends TestCase
             password: 'password123'
         );
 
-        $this->userExistsByUsernameQuery
+        $this->userQueryRepository
             ->expects($this->once())
-            ->method('execute')
+            ->method('existsByUsername')
             ->with('existinguser')
             ->willReturn(true)
         ;
 
-        $this->userExistsByEmailQuery
+        $this->userQueryRepository
             ->expects($this->never())
-            ->method('execute')
+            ->method('existsByEmail')
         ;
 
         $this->userFactory
@@ -156,16 +152,16 @@ final class RegisterUserHandlerTest extends TestCase
             password: 'password123'
         );
 
-        $this->userExistsByUsernameQuery
+        $this->userQueryRepository
             ->expects($this->once())
-            ->method('execute')
+            ->method('existsByUsername')
             ->with('testuser')
             ->willReturn(false)
         ;
 
-        $this->userExistsByEmailQuery
+        $this->userQueryRepository
             ->expects($this->once())
-            ->method('execute')
+            ->method('existsByEmail')
             ->with('existing@example.com')
             ->willReturn(true)
         ;
@@ -206,13 +202,13 @@ final class RegisterUserHandlerTest extends TestCase
         $userId = Uuid::v4();
         $user->method('getId')->willReturn($userId);
 
-        $this->userExistsByUsernameQuery
-            ->method('execute')
+        $this->userQueryRepository
+            ->method('existsByUsername')
             ->willReturn(false)
         ;
 
-        $this->userExistsByEmailQuery
-            ->method('execute')
+        $this->userQueryRepository
+            ->method('existsByEmail')
             ->willReturn(false)
         ;
 
@@ -250,17 +246,17 @@ final class RegisterUserHandlerTest extends TestCase
         );
 
         // Both username and email exist, but username check should fail first
-        $this->userExistsByUsernameQuery
+        $this->userQueryRepository
             ->expects($this->once())
-            ->method('execute')
+            ->method('existsByUsername')
             ->with('existinguser')
             ->willReturn(true)
         ;
 
         // Email check should never be called because username check fails first
-        $this->userExistsByEmailQuery
+        $this->userQueryRepository
             ->expects($this->never())
-            ->method('execute');
+            ->method('existsByEmail');
 
         // Assert
         $this->expectException(UsernameAlreadyExistsException::class);
