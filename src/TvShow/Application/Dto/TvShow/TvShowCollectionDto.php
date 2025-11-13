@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bingely\TvShow\Infrastructure\Tmdb\Dto;
+namespace Bingely\TvShow\Application\Dto\TvShow;
 
 final readonly class TvShowCollectionDto
 {

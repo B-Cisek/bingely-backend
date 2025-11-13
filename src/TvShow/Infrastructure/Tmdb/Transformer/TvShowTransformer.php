@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Bingely\TvShow\Infrastructure\Tmdb\Transformer;
 
-use Bingely\TvShow\Infrastructure\Tmdb\Dto\TvShowCollectionDto;
-use Bingely\TvShow\Infrastructure\Tmdb\Dto\TvShowDto;
+use Bingely\TvShow\Application\Dto\TvShow\TvShowCollectionDto;
+use Bingely\TvShow\Application\Dto\TvShow\TvShowDto;
 
 final class TvShowTransformer implements TransformerInterface
 {

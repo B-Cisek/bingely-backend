@@ -6,30 +6,24 @@ namespace Bingely\TvShow\Infrastructure\Tmdb\Provider;
 
 use Bingely\TvShow\Application\Dto\Genre\GenreCollectionDto;
 use Bingely\TvShow\Application\Dto\Genre\GenreDto;
+use Bingely\TvShow\Application\Dto\TvShow\TvShowCollectionDto;
 use Bingely\TvShow\Application\Provider\TvShowProviderInterface;
 use Bingely\TvShow\Domain\Enum\Language;
 use Bingely\TvShow\Infrastructure\Tmdb\Client\TmdbClientInterface;
-use Bingely\TvShow\Infrastructure\Tmdb\Dto\TvShowCollectionDto;
 use Bingely\TvShow\Infrastructure\Tmdb\Enum\TmdbEndpoint;
 use Bingely\TvShow\Infrastructure\Tmdb\Filter\FilterInterface;
 use Bingely\TvShow\Infrastructure\Tmdb\Transformer\TvShowTransformer;
 
-class TvShowProvider implements TvShowProviderInterface
+readonly class TvShowProvider implements TvShowProviderInterface
 {
     public function __construct(
         private TmdbClientInterface $client,
         private TvShowTransformer $transformer,
     ) {}
 
-    /**
-     * Get popular TV shows.
-     *
-     * @param array<FilterInterface> $filters
-     */
     public function getPopular(
         Language $language = Language::ENGLISH,
         int $page = 1,
-        array $filters = [],
     ): TvShowCollectionDto {
         $data = $this->client->get(
             TmdbEndpoint::TV_POPULAR,
@@ -39,7 +33,7 @@ class TvShowProvider implements TvShowProviderInterface
 
         $collection = $this->transformer->transformCollection($data);
 
-        return $this->applyFilters($collection, $filters);
+        return $this->applyFilters($collection, []);
     }
 
     public function getGenres(Language $language = Language::ENGLISH): GenreCollectionDto

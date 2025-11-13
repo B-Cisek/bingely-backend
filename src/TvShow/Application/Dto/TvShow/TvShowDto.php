@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Bingely\TvShow\Infrastructure\Tmdb\Dto;
+namespace Bingely\TvShow\Application\Dto\TvShow;
 
 final readonly class TvShowDto
 {
     /**
-     * @param array<int, int> $genreIds
+     * @param array<int, int>    $genreIds
      * @param array<int, string> $originCountry
      */
     public function __construct(

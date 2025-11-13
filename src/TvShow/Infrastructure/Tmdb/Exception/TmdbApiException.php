@@ -7,7 +7,7 @@ namespace Bingely\TvShow\Infrastructure\Tmdb\Exception;
 class TmdbApiException extends TmdbException
 {
     /**
-     * @param array<string, mixed>|null $responseData
+     * @param null|array<string, mixed> $responseData
      */
     public function __construct(
         string $message,
@@ -23,7 +23,7 @@ class TmdbApiException extends TmdbException
     }
 
     /**
-     * @return array<string, mixed>|null
+     * @return null|array<string, mixed>
      */
     public function getResponseData(): ?array
     {
