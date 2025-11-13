@@ -18,12 +18,24 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            App:
+            Shared:
                 type: attribute
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Shared/Domain/Entity'
+                prefix: 'Bingely\Shared\Domain\Entity'
+                alias: Shared
+            User:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/User/Domain/Entity'
+                prefix: 'Bingely\User\Domain\Entity'
+                alias: User
+            TvShow:
+                type: attribute
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/TvShow/Domain/Entity'
+                prefix: 'Bingely\TvShow\Domain\Entity'
+                alias: TvShow
         controller_resolver:
             auto_mapping: false
 
@@ -32,6 +44,8 @@ when@test:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            driver: 'pdo_sqlite'
+            path: '%kernel.project_dir%/var/data/test.db'
 
 when@prod:
     doctrine:

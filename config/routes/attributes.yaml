@@ -1,0 +1,11 @@
+kernel:
+    resource: ../../src/Shared/Infrastructure/Symfony/Kernel.php
+    type: attribute
+
+user_controllers:
+    resource: ../../src/User/UserInterface/Controller/
+    type: attribute
+
+tv_show_controllers:
+    resource: ../../src/TvShow/UserInterface/Controller/
+    type: attribute

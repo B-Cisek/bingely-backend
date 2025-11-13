@@ -14,10 +14,12 @@ RUN apk add --virtual .build-deps ${PHPIZE_DEPS}  \
     curl \
     icu-libs \
     libzip \
+    rabbitmq-c-dev \
     && apk add --no-cache postgresql-dev \
     && docker-php-ext-configure intl \
     && docker-php-ext-install pdo_pgsql pgsql intl zip opcache \
-    && docker-php-ext-enable pdo_pgsql pgsql zip opcache \
+    && pecl install amqp \
+    && docker-php-ext-enable pdo_pgsql pgsql zip opcache amqp \
     && docker-php-source delete \
     && apk del .build-deps
 
